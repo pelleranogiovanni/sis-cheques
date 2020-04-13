@@ -106,8 +106,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
+                    <a class="nav-link" href="{{ route('providers.index') }}">
+                        <i class="ni ni-planet text-blue"></i> {{ __('Proveedores') }}
                     </a>
                 </li>
                 {{-- <li class="nav-item">

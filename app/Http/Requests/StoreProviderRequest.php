@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\User;
+use App\Provider;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Provider;
 
-class UserRequest extends FormRequest
+class StoreProviderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +15,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check();
+        return true;
     }
 
     /**
@@ -27,14 +26,20 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
+            'nombre' => [
+                'required', 'min:3', Rule::unique((new Provider)->getTable())->ignore($this->route()->provider->id ?? null)
+            ],
+            'cuit' => [
+                'required', 'min:5', Rule::unique((new Provider)->getTable())->ignore($this->route()->provider->id ?? null)
+            ],
+            'domicilio' => [
                 'required', 'min:3'
             ],
             'email' => [
-                'required', 'email', Rule::unique((new User)->getTable())->ignore($this->route()->user->id ?? null)
+                'email',
             ],
-            'password' => [
-                $this->route()->user ? 'nullable' : 'required', 'confirmed', 'min:6'
+            'telefono' => [
+                'min:5'
             ]
         ];
     }
