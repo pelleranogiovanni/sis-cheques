@@ -110,6 +110,12 @@
                         <i class="ni ni-planet text-blue"></i> {{ __('Proveedores') }}
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('checks.index') }}">
+                        <i class="ni ni-planet text-blue"></i> {{ __('Cheques') }}
+                    </a>
+                </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="ni ni-pin-3 text-orange"></i> {{ __('Maps') }}

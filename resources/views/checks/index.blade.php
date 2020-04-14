@@ -10,11 +10,11 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Proveedores') }}</h3>
+                                <h3 class="mb-0">{{ __('Cheques Emitidos') }}</h3>
                             </div>
-                            <div class="col-4 text-right">
+                            {{-- <div class="col-4 text-right">
                                 <a href="{{ route('providers.create') }}" class="btn btn-sm btn-primary">{{ __('Agrear Proveedor') }}</a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -33,30 +33,21 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">{{ __('Nombre') }}</th>
-                                    <th scope="col">{{ __('CUIT') }}</th>
-                                    <th scope="col">{{ __('Domicilio') }}</th>
-                                    <th scope="col">{{ __('Email') }}</th>
-                                    <th scope="col">{{ __('Teléfono') }}</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">{{ __('Proveedor') }}</th>
+                                    <th scope="col">{{ __('Destinatario') }}</th>
+                                    <th scope="col">{{ __('Monto') }}</th>
+                                    <th scope="col">{{ __('Fecha') }}</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($providers as $provider)
+                                @foreach ($checks as $check)
                                     <tr>
-                                        <td>{{ $provider->nombre }}</td>
-                                        <td>{{ $provider->cuit }}</td>
-                                        <td>{{ $provider->domicilio }}</td>
-                                        <td>
-                                            <a href="mailto:{{ $provider->email }}">{{ $provider->email }}</a>
-                                        </td>
-                                        <td>{{ $provider->telefono }}</td>
-                                        <td>
-                                            <a class="btn btn-icon btn-secondary btn-sm" href="{{ route('checks.create', $provider->id) }}">
-                                                <span class="btn-inner--icon"><i class="ni ni-atom"></i></span>
-                                            </a>
-                                        </td>
+                                        <td>{{ $check->provider->nombre }}</td>
+                                        <td>{{ $check->destinatario }}</td>
+                                        <td>{{ $check->monto }}</td>
+                                        <td>{{ $check->fecha }}</td>
+
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,11 +55,11 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                     {{-- @if ($user->id != auth()->id()) --}}
-                                                        <form action="{{ route('providers.destroy', $provider) }}" method="post">
+                                                        <form action="#" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('providers.edit', $provider) }}">{{ __('Edit') }}</a>
+                                                            <a class="dropdown-item" href="# }}">{{ __('Edit') }}</a>
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this proveedor?") }}') ? this.parentElement.submit() : ''">
                                                                 {{ __('Delete') }}
                                                             </button>

@@ -29,6 +29,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
     Route::resource('providers', 'ProvidersController');
+
+    // Route::resource('checks', 'ChecksController');
+    Route::get('checks-alta/{id}', ['as' => 'checks.create', 'uses' => 'ChecksController@create']);
+    Route::get('checks', ['as' => 'checks.index', 'uses' => 'ChecksController@index']);
+    Route::post('checks', ['as' => 'checks.store', 'uses' => 'ChecksController@store']);
 });
 
 // Route::resource('providers', 'ProvidersController');
