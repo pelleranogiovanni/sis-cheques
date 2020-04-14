@@ -13,4 +13,9 @@ class Provider extends Model
         'telefono',
         'email'
     ];
+
+    public function checks()
+    {
+        return $this->hasMany('App\Check');
+    }
 }
