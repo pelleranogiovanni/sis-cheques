@@ -3,6 +3,8 @@
 @section('content')
     @include('users.partials.header', ['title' => __('Alta de Cheque')])
 
+    {{-- agregado --}}
+    <div id="app2">
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
@@ -18,7 +20,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('checks.store') }}" autocomplete="off">
+                        <form method="post" action="{{ route('checks.store') }}" autocomplete="off" class="formulario">
                             @csrf
 
                             <input type="text" value="{{ $provider->id }}" name="provider_id" hidden>
@@ -68,7 +70,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group{{ $errors->has('numeroFactura') ? ' has-danger' : '' }}">
+                                {{-- <div class="form-group{{ $errors->has('numeroFactura') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-domicilio">{{ __('Factura N°') }}</label>
                                     <input type="text" name="numeroFactura" id="input-numeroFactura" class="form-control form-control-alternative{{ $errors->has('numeroFactura') ? ' is-invalid' : '' }}" placeholder="{{ __('Factura N°') }}" value="{{ old('numeroFactura') }}" required>
 
@@ -77,7 +79,47 @@
                                             <strong>{{ $errors->first('numeroFactura') }}</strong>
                                         </span>
                                     @endif
-                                </div>
+                                </div> --}}
+
+                                {{-- agregado --}}
+
+
+                                        <div class="form-group{{ $errors->has('numeroFactura') ? ' has-danger' : '' }}" v-for="(input,k) in inputs" :key="k">
+                                            <div class="form-row">
+                                                <div class="col">
+
+
+                                                    <label class="form-control-label" for="input-email">{{ __('N° de Factura') }}</label>
+                                                    <input id="numFactura" type="text" class=" form-control form-control-alternative{{ $errors->has('numeroFactura') ? ' is-invalid' : '' }}"
+                                                            v-model="input.name" name="numeroFactura[]" placeholder="{{ __('N° Factura') }}" value="{{ old('numeroFactura') }}" required>
+                                                    <span>
+                                                        <i class="fas fa-minus-circle text-danger" @click="remove(k)" v-show="k || ( !k && inputs.length > 1)"></i>
+                                                        <i class="fas fa-plus-circle text-success" @click="add(k)" v-show="k == inputs.length-1"></i>
+                                                    </span>
+
+                                                    @if ($errors->has('numeroFactura'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $errors->first('numeroFactura') }}</strong>
+                                                    </span>
+                                                    @endif
+                                                </div>
+
+                                                <div class="col">
+                                                    <label class="form-control-label" for="input-monto">{{ __('Monto $') }}</label>
+                                                    <input type="text" class="monto form-input form-control form-control-alternative{{ $errors->has('montoFactura') ? ' is-invalid' : '' }}"  name="montoFactura[]" placeholder="{{ __('Monto $') }}" value="{{ old('montoFactura') }}" required  onkeyup="sumar();">
+
+                                                    @if ($errors->has('montoFactura'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $errors->first('montoFactura') }}</strong>
+                                                    </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span>El resultado es: </span> <span id="spTotal"></span>
+
+
+
 
 
                                 <div class="text-center">
@@ -89,7 +131,50 @@
                 </div>
             </div>
         </div>
+    {{-- agregado --}}
+    </div>
 
         @include('layouts.footers.auth')
     </div>
+    {{-- @push('main')
+        <script>
+            const formulario = document.querySelector('.formulario');
+            formulario.addEventListener('submit',function(e){
+                e.preventDefault();
+                 const inputs = formulario.querySelectorAll('.form-input [value=""]')
+                 const val = inputs.values
+                console.log(val)
+            })
+
+            const array1 = [1, 2, 3, 4];
+
+        </script>
+    @endpush --}}
+
+    <script>
+        /* Sumar dos números. */
+        function sumar() {
+
+            var total = 0;
+
+            $(".monto").each(function() {
+
+            if (isNaN(parseFloat($(this).val()))) {
+
+                total += 0;
+
+            } else {
+
+                total += parseFloat($(this).val());
+
+            }
+
+            });
+
+            //alert(total);
+            document.getElementById('spTotal').innerHTML = total;
+
+            }
+    </script>
+
 @endsection

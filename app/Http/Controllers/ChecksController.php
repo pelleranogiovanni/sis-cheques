@@ -41,8 +41,8 @@ class ChecksController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
         $check = new Check;
-        $invoice = new Invoice;
 
         $check->numeroCheque = $request->numeroCheque;
         $check->monto = $request->monto;
@@ -52,9 +52,21 @@ class ChecksController extends Controller
 
         $check->save();
 
-        $invoice->numeroFactura = $request->numeroFactura;
-        $invoice->check_id = $check->id;
-        $invoice->save();
+
+        $cantFacturas = $request->numeroFactura;
+        $longitud = count($cantFacturas);
+        $j = 0;
+
+
+        for ($i = 0; $i < $longitud; $i++) {
+            $invoice = new Invoice;
+            $invoice->numeroFactura =  $cantFacturas[$j];
+            $invoice->check_id = $check->id;
+
+            $invoice->save();
+
+            $j++;
+        }
 
         return back();
     }
